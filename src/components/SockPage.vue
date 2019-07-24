@@ -13,22 +13,30 @@
         </h1>
 
         <p v-if="inventory > 10">InStock</p>
-        <p
-          v-else-if="inventory <= 10 && inventory > 0"
-        >Almost gone... only {{ inventory }} remaining!</p>
+        <p v-else-if="inventory <= 10 && inventory > 0">
+          Almost gone... only {{ inventory }} remaining!</p>
         <p v-else>Out of Stock</p>
 
         <ul>
-          <li v-for="detail in details" v-bind:key="detail.id">{{ detail }}</li>
+          <li v-for="detail in details" :key="detail.id">{{ detail }}</li>
         </ul>
+
+        <select v-model="size">
+          <option :value="size" disabled>select a size</option>
+          <option v-for="size in sizes" :key="size.sizeID">
+            {{ size.sizeFit }}
+          </option>
+        </select>
 
         <div v-for="variant in variants" :key="variant.id">
           {{ variant.variantColor }}
         </div>
 
-        <button>
-          
-        </button>
+        <button @click="addToCart">Add to Cart</button>
+
+        <div class="cart">
+          Cart({{ cart }})
+        </div>
       </div>
     </div>
   </div>
@@ -44,25 +52,49 @@ export default {
         "https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg",
       onSale: true,
       inventory: 0,
-      details: ["20% Polyester", "80% Cotton", "Gender Neutral"],
+      details: ["80% Cotton", "20% Polyester", "Gender Neutral"],
       variants: [
         {
           variantID: "2234",
-        variantColor: "green"
+          variantColor: "green"
         },
         {
           variantID: "2235",
-        variantColor: "blue"
+          variantColor: "blue"
         }
-      ]
+      ],
+      size: "",
+      sizes: [
+        {
+          sizeID: "1234",
+          sizeFit: "small"
+        },
+        {
+          sizeID: "1235",
+          sizeFit: "medium"
+        },
+        {
+          sizeID: "1236",
+          sizeFit: "large"
+        },
+        {
+          sizeID: "1237",
+          sizeFit: "X large"
+        }
+      ],
+      cart: 0
     };
   },
-
   vue: {
     loaders: {
       scss: "style!css!sass"
     }
-  }
+  },
+  methods: {
+    addToCart() {
+      this.cart += 1
+    }
+  },
 };
 </script>
 
@@ -87,9 +119,17 @@ body {
 .product {
   display: flex;
 
+  p {
+    font-weight: bold;
+  }
+
   span {
     font-size: 16px;
     color: red;
+  }
+
+  span.selected {
+    color: black;
   }
 
   a {
@@ -123,6 +163,7 @@ img {
 
 .cart {
   margin-right: 25px;
+  margin-top: 2rem;
   float: right;
   border: 1px solid #d8d8d8;
   padding: 5px 20px;
