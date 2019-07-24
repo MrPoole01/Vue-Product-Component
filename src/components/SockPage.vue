@@ -2,6 +2,7 @@
   <div class="container">
     <div class="nav-bar"></div>
     <div class="product">
+      
       <div class="product-image">
         <img :src="image" />
       </div>
@@ -29,7 +30,8 @@
         </select>
 
         <div v-for="variant in variants" :key="variant.id">
-          {{ variant.variantColor }}
+          <p @mouseover="updateProduct(variant.variantImage)">
+          {{ variant.variantColor }}</p>
         </div>
 
         <button @click="addToCart">Add to Cart</button>
@@ -56,11 +58,13 @@ export default {
       variants: [
         {
           variantID: "2234",
-          variantColor: "green"
+          variantColor: "green",
+          variantImage: "https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg"
         },
         {
           variantID: "2235",
-          variantColor: "blue"
+          variantColor: "blue",
+          variantImage: "https://www.vuemastery.com/images/challenges/vmSocks-blue-onWhite.jpg"
         }
       ],
       size: "",
@@ -93,6 +97,9 @@ export default {
   methods: {
     addToCart() {
       this.cart += 1
+    },
+    updateProduct(variantImage) {
+      this.image = variantImage
     }
   },
 };
