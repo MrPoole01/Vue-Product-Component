@@ -9,14 +9,14 @@
 
       <div class="product-info">
         <h1>
-          <a :href="image">{{ product }}</a>
-          <span v-if="onSale"> On Sale</span>
+          <a :href="image">{{ title }}</a>
+          <br><span v-if="onSale"> On Sale</span>
         </h1>
 
         <p v-if="inventory > 10">InStock</p>
         <p v-else-if="inventory <= 10 && inventory > 0">
           Almost gone... only {{ inventory }} remaining!</p>
-        <p v-else>Out of Stock</p>
+        <p v-else class="os">Out of Stock</p>
 
         <ul>
           <li v-for="detail in details" :key="detail.id">{{ detail }}</li>
@@ -29,12 +29,19 @@
           </option>
         </select>
 
-        <div v-for="variant in variants" :key="variant.id">
-          <p @mouseover="updateProduct(variant.variantImage)">
-          {{ variant.variantColor }}</p>
+        <div  class="color-box" 
+              v-for="(variant, index) in variants" 
+              :key="variant.variantId"
+              :style="{ backgroundColor: variant.variantColor }"
+              @mouseover="updateProduct(index)"
+              >
         </div>
 
-        <button @click="addToCart">Add to Cart</button>
+        <button @click="addToCart"
+                :disabled="!inStock"
+                :class="{ disabledButton: !inStock }"> 
+                Add to Cart
+        </button>
 
         <div class="cart">
           Cart({{ cart }})
@@ -49,22 +56,23 @@ export default {
   data() {
     return {
       name: "SockPage",
+      brand: "SuperVue",
       product: "Socks",
-      image:
-        "https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg",
+      selectedVariant: 0,
       onSale: true,
-      inventory: 0,
+      inStock: true,
+      inventory: 5,
       details: ["80% Cotton", "20% Polyester", "Gender Neutral"],
       variants: [
         {
-          variantID: "2234",
+          variantId: "2234",
           variantColor: "green",
-          variantImage: "https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg"
+          variantImage: "./assets/vmSocks-green-onWhite.jpg"
         },
         {
-          variantID: "2235",
+          variantId: "2235",
           variantColor: "blue",
-          variantImage: "https://www.vuemastery.com/images/challenges/vmSocks-blue-onWhite.jpg"
+          variantImage: "./assets/vmSocks-blue-onWhite.jpg"
         }
       ],
       size: "",
@@ -95,11 +103,21 @@ export default {
     }
   },
   methods: {
+
     addToCart() {
       this.cart += 1
+      this.inventory -=1
     },
-    updateProduct(variantImage) {
-      this.image = variantImage
+    updateProduct(index) {
+      this.selectedVariant = index      
+    }
+  },
+  computed: {
+    title() {
+      return this.brand + ' ' + this.product 
+    },
+    image() {
+      return this.variants[this.selectedVariant].variantImage
     }
   },
 };
@@ -129,6 +147,10 @@ body {
   p {
     font-weight: bold;
   }
+
+  p.os {
+      text-decoration: line-through;
+    }
 
   span {
     font-size: 16px;
@@ -165,7 +187,7 @@ img {
 .color-box {
   width: 40px;
   height: 40px;
-  margin-top: 5px;
+  margin-top: 1rem;
 }
 
 .cart {
