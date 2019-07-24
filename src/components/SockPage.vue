@@ -1,8 +1,5 @@
 <template>
-  <div class="container">
-    <div class="nav-bar"></div>
     <div class="product">
-      
       <div class="product-image">
         <img :src="image" />
       </div>
@@ -13,8 +10,8 @@
           <br><span v-if="onSale"> On Sale</span>
         </h1>
 
-        <p v-if="inventory > 10">InStock</p>
-        <p v-else-if="inventory <= 10 && inventory > 0">
+        <p v-if="inStock > 10">InStock</p>
+        <p v-else-if="inStock <= 10 && inStock > 0">
           Almost gone... only {{ inventory }} remaining!</p>
         <p v-else class="os">Out of Stock</p>
 
@@ -48,11 +45,12 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
+
 export default {
+  name: 'socks',
   data() {
     return {
       name: "SockPage",
@@ -60,19 +58,19 @@ export default {
       product: "Socks",
       selectedVariant: 0,
       onSale: true,
-      inStock: true,
-      inventory: 5,
       details: ["80% Cotton", "20% Polyester", "Gender Neutral"],
       variants: [
         {
           variantId: "2234",
           variantColor: "green",
-          variantImage: "./assets/vmSocks-green-onWhite.jpg"
+          variantImage: "./assets/vmSocks-green-onWhite.jpg",
+          variantQuantity: 10
         },
         {
           variantId: "2235",
           variantColor: "blue",
-          variantImage: "./assets/vmSocks-blue-onWhite.jpg"
+          variantImage: "./assets/vmSocks-blue-onWhite.jpg",
+          variantQuantity: 0
         }
       ],
       size: "",
@@ -106,7 +104,7 @@ export default {
 
     addToCart() {
       this.cart += 1
-      this.inventory -=1
+      this.variants[this.selectedVariant].variantQuantity -= 1
     },
     updateProduct(index) {
       this.selectedVariant = index      
@@ -118,6 +116,12 @@ export default {
     },
     image() {
       return this.variants[this.selectedVariant].variantImage
+    },
+    inStock() {
+      return this.variants[this.selectedVariant].variantQuantity
+    },
+    inventory() {
+      return this.variants[this.selectedVariant].variantQuantity
     }
   },
 };
@@ -131,18 +135,9 @@ body {
   margin: 0px;
 }
 
-.container {
-  margin: -3.8rem;
-}
-
-.nav-bar {
-  background: linear-gradient(-90deg, #84cf6a, #16c0b0);
-  height: 60px;
-  margin-bottom: 15px;
-}
-
 .product {
   display: flex;
+  margin-left: -3rem;
 
   p {
     font-weight: bold;
@@ -176,6 +171,7 @@ img {
 
 .product-image {
   flex-basis: 700px;
+  margin: 0;
 }
 
 .product-info {

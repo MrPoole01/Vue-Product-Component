@@ -1,16 +1,19 @@
 <template>
   <div id="app">
+    <Nav/>
     <SockPage />
   </div>
 </template>
 
 <script>
-import SockPage from './components/SockPage.vue'
+import SockPage from '@/components/SockPage'
+import Nav from '@/components/Nav'
 
 export default {
   name: 'app',
   components: {
-    SockPage
+    SockPage,
+    Nav
   }
 }
 </script>
