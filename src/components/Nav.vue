@@ -1,9 +1,19 @@
 <template>
-  <div class="nav-bar"></div>
+  <div class="nav-bar">
+    <div class="cart">Cart({{ cart.length }})</div>
+  </div>
 </template>
 
 <script>
 export default {
+  props: [
+    'inStock',
+    'inventory',
+    'variants',
+    'selectedVariants',
+    'cart',
+    'addToCart'
+  ],
   data() {
     return {
       
@@ -26,4 +36,11 @@ export default {
   margin-top: -3.8rem;
 }
 
+.cart {
+  margin-right: 25px;
+  margin-top: .5rem;
+  float: right;
+  border: 1px solid #d8d8d8;
+  padding: 5px 20px;
+}
 </style>

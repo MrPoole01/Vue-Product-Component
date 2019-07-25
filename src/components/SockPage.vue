@@ -15,9 +15,13 @@
           Almost gone... only {{ inventory }} remaining!</p>
         <p v-else class="os">Out of Stock</p>
 
-        <ul>
-          <li v-for="detail in details" :key="detail.id">{{ detail }}</li>
-        </ul>
+        <p>
+          {{ description }}
+        </p>
+
+          <ul>
+            <li v-for="detail in details" :key="detail.id">{{ detail }}</li>
+          </ul>
 
         <select v-model="size">
           <option :value="size" disabled>select a size</option>
@@ -26,23 +30,28 @@
           </option>
         </select>
 
-        <div  class="color-box" 
-              v-for="(variant, index) in variants" 
-              :key="variant.variantId"
-              :style="{ backgroundColor: variant.variantColor }"
-              @mouseover="updateProduct(index)"
-              >
+        <div class="box-container">
+          <div  class="color-box" 
+                v-for="(variant, index) in variants" 
+                :key="variant.variantId"
+                :style="{ backgroundColor: variant.variantColor }"
+                @mouseover="updateProduct(index)"
+                >
+          </div>
         </div>
 
-        <button @click="addToCart"
-                :disabled="!inStock"
-                :class="{ disabledButton: !inStock }"> 
-                Add to Cart
-        </button>
-
-        <div class="cart">
-          Cart({{ cart }})
+        <div class="button-container">
+          <button @click="addToCart"
+                  :disabled="!inStock"
+                  :class="{ disabledButton: !inStock }"> 
+                  Add to Cart
+          </button>
+          <button @click="removeFromCart"
+                  class="remove-button"> 
+                  Remove from Cart
+          </button>
         </div>
+
       </div>
     </div>
 </template>
@@ -51,79 +60,42 @@
 
 export default {
   name: 'socks',
+  props: [
+    'name',
+    'brand',
+    'description',
+    'selectedVariant',
+    'onSale',
+    'details',
+    'variants',
+    'size',
+    'sizes',
+    'updateProduct',
+    'title',
+    'image',
+    'inStock',
+    'inventory',
+  ],
   data() {
     return {
-      name: "SockPage",
-      brand: "SuperVue",
-      product: "Socks",
-      selectedVariant: 0,
-      onSale: true,
-      details: ["80% Cotton", "20% Polyester", "Gender Neutral"],
-      variants: [
-        {
-          variantId: "2234",
-          variantColor: "green",
-          variantImage: "./assets/vmSocks-green-onWhite.jpg",
-          variantQuantity: 10
-        },
-        {
-          variantId: "2235",
-          variantColor: "blue",
-          variantImage: "./assets/vmSocks-blue-onWhite.jpg",
-          variantQuantity: 0
-        }
-      ],
-      size: "",
-      sizes: [
-        {
-          sizeID: "1234",
-          sizeFit: "small"
-        },
-        {
-          sizeID: "1235",
-          sizeFit: "medium"
-        },
-        {
-          sizeID: "1236",
-          sizeFit: "large"
-        },
-        {
-          sizeID: "1237",
-          sizeFit: "X large"
-        }
-      ],
-      cart: 0
+      
     };
+  },
+  methods: {
+
+    addToCart() {
+      this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId)
+    },
+    removeFromCart() {
+      this.$emit('remove-from-cart', this.variants[this.selectedVariant].variantId)
+    }
   },
   vue: {
     loaders: {
       scss: "style!css!sass"
     }
   },
-  methods: {
-
-    addToCart() {
-      this.cart += 1
-      this.variants[this.selectedVariant].variantQuantity -= 1
-    },
-    updateProduct(index) {
-      this.selectedVariant = index      
-    }
-  },
-  computed: {
-    title() {
-      return this.brand + ' ' + this.product 
-    },
-    image() {
-      return this.variants[this.selectedVariant].variantImage
-    },
-    inStock() {
-      return this.variants[this.selectedVariant].variantQuantity
-    },
-    inventory() {
-      return this.variants[this.selectedVariant].variantQuantity
-    }
-  },
+  
 };
 </script>
 
@@ -180,22 +152,23 @@ img {
   flex-basis: 500px;
 }
 
+.box-container {
+  display: flex;
+  flex-direction: row;
+}
+
 .color-box {
   width: 40px;
   height: 40px;
-  margin-top: 1rem;
+  margin: 1rem .3rem;
 }
 
-.cart {
-  margin-right: 25px;
-  margin-top: 2rem;
-  float: right;
-  border: 1px solid #d8d8d8;
-  padding: 5px 20px;
+.button-container {
+  display: flex;
 }
 
 button {
-  margin-top: 30px;
+  margin: 30px .3rem;
   border: none;
   background-color: #1e95ea;
   color: white;
@@ -206,6 +179,10 @@ button {
 
 .disabledButton {
   background-color: #d8d8d8;
+}
+
+.remove-button {
+  background-color: #c41212;
 }
 
 .review-form {
