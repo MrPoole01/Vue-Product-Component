@@ -26,7 +26,10 @@
       @add-to-cart="updateCart"
       @remove-from-cart="removeItem"
     />
-    <Reviews />
+    <Reviews 
+      :addReview="addReview"
+      @review-submitted="addReview"
+    />
   </div>
 </template>
 
@@ -102,6 +105,9 @@ export default {
     },
     updateProduct(index) {
       this.selectedVariant = index;
+    },
+    addReview(productReview) {
+      this.reviews.push(productReview)
     }
   },
   computed: {

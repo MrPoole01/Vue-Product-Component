@@ -1,6 +1,18 @@
 <template>
   <div class="container">
 
+    <div>
+        <h2>Reviews</h2>
+        <p v-if="!reviews.length">There are no reviews yet.</p>
+        <ul>
+          <li v-for="review in reviews" :key="review">
+          <p>{{ review.name }}</p>
+          <p>Rating: {{ review.rating }}</p>
+          <p>{{ review.review }}</p>
+          </li>
+        </ul>
+    </div>
+
     <form class="review-form" @submit.prevent="onSubmit">
       
         <p class="error" v-if="errors.length">
@@ -53,6 +65,7 @@ export default {
   data() {
       return {
         name: null,
+        reviews:[],
         review: null,
         rating: null,
         recommend: null,
@@ -89,6 +102,7 @@ export default {
 
 .container {
   display: flex;
+  flex-direction: column;
   justify-content: left;
   margin: 4%;
 }
