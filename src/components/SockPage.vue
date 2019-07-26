@@ -184,21 +184,4 @@ button {
 .remove-button {
   background-color: #c41212;
 }
-
-.review-form {
-  width: 30%;
-  padding: 20px;
-  border: 1px solid #d8d8d8;
-}
-
-input {
-  width: 100%;
-  height: 25px;
-  margin-bottom: 20px;
-}
-
-textarea {
-  width: 100%;
-  height: 60px;
-}
 </style>

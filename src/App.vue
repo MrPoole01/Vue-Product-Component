@@ -26,17 +26,20 @@
       @add-to-cart="updateCart"
       @remove-from-cart="removeItem"
     />
+    <Reviews />
   </div>
 </template>
 
 <script>
 import SockPage from "@/components/SockPage";
 import Nav from "@/components/Nav";
+import Reviews from "@/components/Reviews";
 
 export default {
   name: "app",
   components: {
     SockPage,
+    Reviews,
     Nav
   },
   data() {
