@@ -1,6 +1,15 @@
 <template>
   <div class="container">
 
+    <!-- <div>
+      <span class="tab" 
+        v-for="(tab, index) in tabs"
+        :key="tab"
+        @click="selectedTab = tab"
+        >{{ tab }}
+      </span>
+    </div> -->
+
     <div>
         <h2>Reviews</h2>
         <p v-if="!reviews.length">There are no reviews yet.</p>
@@ -65,6 +74,7 @@ export default {
   data() {
       return {
         name: null,
+        index: "",
         reviews:[],
         review: null,
         rating: null,
@@ -72,29 +82,32 @@ export default {
         errors: []
       }
     },
-    methods: {
-      onSubmit() {
-        this.errors = []
-        if(this.name && this.review && this.rating && this.recommend) {
-          let productReview = {
-            name: this.name,
-            review: this.review,
-            rating: this.rating,
-            recommend: this.recommend
-          }
-          this.$emit('review-submitted', productReview)
-          this.name = null
-          this.review = null
-          this.rating = null
-          this.recommend = null
-        } else {
-          if(!this.name) this.errors.push("Name required.")
-          if(!this.review) this.errors.push("Review required.")
-          if(!this.rating) this.errors.push("Rating required.")
-          if(!this.recommend) this.errors.push("Recommendation required.")
+  methods: {
+    onSubmit() {
+      this.errors = []
+      if(this.name && this.review && this.rating && this.recommend) {
+        let productReview = {
+          name: this.name,
+          review: this.review,
+          rating: this.rating,
+          recommend: this.recommend
         }
+        this.$emit('review-submitted', productReview)
+        this.name = null
+        this.review = null
+        this.rating = null
+        this.recommend = null
+      } else {
+        if(!this.name) this.errors.push("Name required.")
+        if(!this.review) this.errors.push("Review required.")
+        if(!this.rating) this.errors.push("Rating required.")
+        if(!this.recommend) this.errors.push("Recommendation required.")
       }
+    },
+     addReview(productReview) {
+      this.reviews.push(productReview)
     }
+  }
 }
 </script>
 

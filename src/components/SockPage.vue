@@ -161,6 +161,7 @@ img {
   width: 40px;
   height: 40px;
   margin: 1rem .3rem;
+  border-radius: 100%;
 }
 
 .button-container {
@@ -175,6 +176,7 @@ button {
   height: 40px;
   width: 100px;
   font-size: 14px;
+  border-radius: 8%;
 }
 
 .disabledButton {

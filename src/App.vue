@@ -22,13 +22,11 @@
       :image="image"
       :inStock="inStock"
       :inventory="inventory"
-      :addToCart="addToCart"
       @add-to-cart="updateCart"
       @remove-from-cart="removeItem"
     />
     <Reviews 
-      :addReview="addReview"
-      @review-submitted="addReview"
+      
     />
   </div>
 </template>
@@ -105,9 +103,6 @@ export default {
     },
     updateProduct(index) {
       this.selectedVariant = index;
-    },
-    addReview(productReview) {
-      this.reviews.push(productReview)
     }
   },
   computed: {
