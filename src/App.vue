@@ -27,8 +27,8 @@
     />
 
     <ProductReviews 
-      :reviews="reviews"
       @review-submitted="addReview"
+      :reviews="reviews"
     />
   </div>
 </template>

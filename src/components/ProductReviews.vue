@@ -1,7 +1,15 @@
 <template>
   <div class="container">
 
-    <div class="reviews">
+    <span class="tabs" 
+      :class="{ activeTab: selectedTab === tab}"
+      v-for="(tab, index) in tabs"
+      :key="index"
+      @click="selectedTab = tab"
+      >{{ tab }}
+    </span>
+
+    <div class="reviews" v-show="selectedTab === 'Reviews'">
       <h2>Reviews</h2>
       <p v-if="!reviews.length">There are no reviews yet.</p>
       <ul>
@@ -12,7 +20,13 @@
       </ul>
     </div>
 
-    <form class="review-form" @submit.prevent="onSubmit">
+    <hr>
+
+    <form 
+      class="review-form" 
+      @submit.prevent="onSubmit"
+      v-show="selectedTab === 'Make A Review' "
+      >
       
         <p class="error" v-if="errors.length">
           <b>Please correct the following error(s):</b>
@@ -61,12 +75,20 @@
 
 <script>
 export default {
-  props: [
-    'addReview',
-    'reviews'
-  ],
+  props: {
+      reviews: {
+      type: Array,
+      required: true
+    },
+      addReviews: {
+      type: Array,
+      required: true
+      }
+  },
   data() {
     return {
+      tabs: ['Reviews', 'Make A Review'],
+      selectedTab: 'Reviews',
       name: null,
       review: null,
       rating: null,
@@ -104,19 +126,17 @@ export default {
 <style scoped lang="scss">
 
 .container {
-  display: flex;
-  flex-direction: column;
+  display: block;
+  flex-direction: row;
   justify-content: left;
   margin: 4%;
 
   .reviews {
-
     text-align: left;
-
   }
 
   .review-form {
-    max-width: 100vw;
+    max-width: 20vw;
     padding: 20px;
     border: 1px solid #d8d8d8;
   }
@@ -131,6 +151,22 @@ export default {
     width: 100%;
     height: 60px;
   }
+
+  .tabs {
+    margin-left: 20px;
+    cursor: pointer;
+  }
+
+  hr {
+    margin: 1.3rem;
+  }
+
+  .activeTab {
+    color: #16C0B0;
+    text-decoration: underline;
+    font-size: 20px;
+  }
+
 }
 
 </style>
