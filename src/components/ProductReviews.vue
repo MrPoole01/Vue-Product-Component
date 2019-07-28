@@ -1,22 +1,12 @@
 <template>
   <div class="container">
 
-    <!-- <div>
-      <span class="tab" 
-        v-for="(tab, index) in tabs"
-        :key="tab"
-        @click="selectedTab = tab"
-        >{{ tab }}
-      </span>
-    </div> -->
-
-    <div>
+    <div class="reviews">
       <h2>Reviews</h2>
       <p v-if="!reviews.length">There are no reviews yet.</p>
       <ul>
         <li v-for="review in reviews" :key="review">
-        <p>{{ review.name }}</p>
-        <p>Rating: {{ review.rating }}</p>
+        <p>{{ review.name }} <br> Rating: {{ review.rating }}</p>
         <p>{{ review.review }}</p>
         </li>
       </ul>
@@ -71,13 +61,18 @@
 
 <script>
 export default {
+  props: [
+    'addReview',
+    'reviews'
+  ],
   data() {
     return {
       name: null,
       review: null,
       rating: null,
       recommend: null,
-      index: []
+      index: [],
+      errors: []
     }
   },
   methods: {
@@ -89,7 +84,7 @@ export default {
           review: this.review,
           rating: this.rating,
           recommend: this.recommend
-        }
+        }        
         this.$emit('review-submitted', productReview)
         this.name = null
         this.review = null
@@ -113,23 +108,30 @@ export default {
   flex-direction: column;
   justify-content: left;
   margin: 4%;
+
+  .reviews {
+
+    text-align: left;
+
+  }
+
+  .review-form {
+    max-width: 100vw;
+    padding: 20px;
+    border: 1px solid #d8d8d8;
+  }
+
+  input {
+    width: 100%;
+    height: 25px;
+    margin-bottom: -.2rem;
+  }
+
+  textarea {
+    width: 100%;
+    height: 60px;
+  }
 }
 
-.review-form {
-  max-width: 100vw;
-  padding: 20px;
-  border: 1px solid #d8d8d8;
-}
-
-input {
-  width: 100%;
-  height: 25px;
-  margin-bottom: -.2rem;
-}
-
-textarea {
-  width: 100%;
-  height: 60px;
-}
 </style>
 

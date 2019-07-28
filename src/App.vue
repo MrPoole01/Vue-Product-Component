@@ -26,7 +26,8 @@
       @remove-from-cart="removeItem"
     />
 
-    <Reviews 
+    <ProductReviews 
+      :reviews="reviews"
       @review-submitted="addReview"
     />
   </div>
@@ -35,12 +36,13 @@
 <script>
 import SockPage from "@/components/SockPage";
 import Nav from "@/components/Nav";
-import Reviews from "@/components/Reviews";
+import ProductReviews from "@/components/ProductReviews";
+//import { log } from 'util';
 
 export default {
   name: "app",
   components: {
-    Reviews,
+    ProductReviews,
     SockPage,
     Nav
   },
@@ -88,8 +90,7 @@ export default {
           sizeFit: "X large"
         }
       ],
-      reviews: [],
-      errors: []
+      reviews: []
     };
   },
   methods: {
