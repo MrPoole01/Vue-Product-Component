@@ -129,14 +129,15 @@ export default {
   display: block;
   flex-direction: row;
   justify-content: left;
-  margin: 4%;
+  margin: 3.5%;
 
   .reviews {
     text-align: left;
   }
 
   .review-form {
-    max-width: 20vw;
+    display: inline-block;
+    max-width: 50%;
     padding: 20px;
     border: 1px solid #d8d8d8;
   }
@@ -149,7 +150,7 @@ export default {
 
   textarea {
     width: 100%;
-    height: 60px;
+    height: 100px;
   }
 
   .tabs {

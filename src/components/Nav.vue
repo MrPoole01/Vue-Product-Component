@@ -34,6 +34,8 @@ export default {
   height: 60px;
   margin-bottom: 15px;
   margin-top: -3.8rem;
+  width: 100vw;
+  position: fixed;
 }
 
 .cart {
