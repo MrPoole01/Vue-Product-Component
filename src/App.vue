@@ -25,8 +25,9 @@
       @add-to-cart="updateCart"
       @remove-from-cart="removeItem"
     />
+
     <Reviews 
-      
+      @review-submitted="addReview"
     />
   </div>
 </template>
@@ -39,8 +40,8 @@ import Reviews from "@/components/Reviews";
 export default {
   name: "app",
   components: {
-    SockPage,
     Reviews,
+    SockPage,
     Nav
   },
   data() {
@@ -86,7 +87,9 @@ export default {
           sizeID: "1237",
           sizeFit: "X large"
         }
-      ]
+      ],
+      reviews: [],
+      errors: []
     };
   },
   methods: {
@@ -103,6 +106,9 @@ export default {
     },
     updateProduct(index) {
       this.selectedVariant = index;
+    },
+    addReview(productReview) {
+    this.reviews.push(productReview)
     }
   },
   computed: {

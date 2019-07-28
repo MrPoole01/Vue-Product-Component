@@ -11,15 +11,15 @@
     </div> -->
 
     <div>
-        <h2>Reviews</h2>
-        <p v-if="!reviews.length">There are no reviews yet.</p>
-        <ul>
-          <li v-for="review in reviews" :key="review">
-          <p>{{ review.name }}</p>
-          <p>Rating: {{ review.rating }}</p>
-          <p>{{ review.review }}</p>
-          </li>
-        </ul>
+      <h2>Reviews</h2>
+      <p v-if="!reviews.length">There are no reviews yet.</p>
+      <ul>
+        <li v-for="review in reviews" :key="review">
+        <p>{{ review.name }}</p>
+        <p>Rating: {{ review.rating }}</p>
+        <p>{{ review.review }}</p>
+        </li>
+      </ul>
     </div>
 
     <form class="review-form" @submit.prevent="onSubmit">
@@ -72,16 +72,14 @@
 <script>
 export default {
   data() {
-      return {
-        name: null,
-        index: "",
-        reviews:[],
-        review: null,
-        rating: null,
-        recommend: null,
-        errors: []
-      }
-    },
+    return {
+      name: null,
+      review: null,
+      rating: null,
+      recommend: null,
+      index: []
+    }
+  },
   methods: {
     onSubmit() {
       this.errors = []
@@ -103,9 +101,6 @@ export default {
         if(!this.rating) this.errors.push("Rating required.")
         if(!this.recommend) this.errors.push("Recommendation required.")
       }
-    },
-     addReview(productReview) {
-      this.reviews.push(productReview)
     }
   }
 }
